@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    container_name: twitter-binance-sync-api
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./users.db
+      - TWITTER_CLIENT_ID=${TWITTER_CLIENT_ID}
+      - TWITTER_CLIENT_SECRET=${TWITTER_CLIENT_SECRET}
+      - CALLBACK_URL=${CALLBACK_URL}
+      - WEBHOOK_SECRET=${WEBHOOK_SECRET}
+      - BINANCE_EMAIL=${BINANCE_EMAIL}
+      - BINANCE_PASSWORD=${BINANCE_PASSWORD}
+    depends_on:
+      - db
+    volumes:
+      - ./users.db:/app/users.db
+
+  db:
+    image: postgres:14
+    container_name: twitter-binance-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: twitter_binance_sync
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  frontend:
+    build: ./frontend
+    container_name: twitter-binance-frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+
+volumes:
+  postgres_data:

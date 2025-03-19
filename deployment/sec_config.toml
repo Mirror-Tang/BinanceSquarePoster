@@ -1,0 +1,4 @@
+[sev]
+enabled = true
+encryption_key = "/path/to/key"
+secure_boot = true
