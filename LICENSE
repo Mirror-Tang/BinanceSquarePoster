@@ -1,21 +1,29 @@
-MIT License
+# Commercial License
 
-Copyright (c) 2025 Mirror
+## 1. 许可证概述
+本软件（以下简称“软件”）的所有源代码、文档、设计和相关资源均受本许可证约束。
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+### **🚫 禁止事项**
+1. **未经许可，禁止商业用途**（包括但不限于销售、租赁、SaaS 提供、广告变现）。
+2. **禁止分发或传播**（包括但不限于 GitHub Fork、镜像托管、重新发布）。
+3. **禁止修改后重新发布**（包括但不限于更改品牌名称、功能调整后发布）。
+4. **禁止用于侵犯隐私、非法交易或其他违反法律法规的行为**。
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+### **✅ 允许事项**
+1. **个人学习与研究**：用户可以下载、阅读、修改代码，供个人技术研究使用。
+2. **非商用内部使用**：可在非盈利环境（如学术研究、个人项目）使用。
+3. **贡献改进代码**：可提交 Pull Request 以改进项目，但不得用于商业传播。
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+## 2. 商业授权
+如果您希望将本软件用于商业用途（包括但不限于企业内部使用、SaaS 提供、出售等），请联系项目作者获取正式授权。
+
+📩 **联系授权：mirror.tang@zerobase.pro**
+
+## 3. 责任限制
+本软件按“现状”提供，作者不对因使用本软件导致的任何 **数据丢失、法律问题、财务损失** 负责。
+
+## 4. 许可证有效性
+本许可证从发布之日起生效，所有违反本许可证的行为将依法追究。
+
+📌 **请遵守本许可证，如需授权，请联系作者！**
+
