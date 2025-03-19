@@ -137,12 +137,12 @@ docker-compose up -d --build
 ---
 
 ## 📜 许可证
-本项目基于 **MIT/GPL 许可证**，欢迎贡献代码！🎯
+本项目基于 **Commercial License**，欢迎贡献代码！🎯
 
 ---
 
 ## 🤝 贡献指南
-欢迎提交 **Issue & PR**！请参考 [CONTRIBUTING.md](docs/CONTRIBUTING.md) 了解详细贡献流程。
+欢迎提交 **Issue & PR**！
 
 🚀 **Enjoy & contribute!** 🎉
 
