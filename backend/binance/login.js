@@ -7,40 +7,26 @@ async function login(browser, page, username, password) {
       waitUntil: "networkidle2",
     });
 
-    // await page.waitForSelector("div.logo-home", { visible: true });
-    // await new Promise((r) => setTimeout(r, 1000));
-
-    // const loginButton = await page.evaluateHandle(() => {
-    //   const logo = document.querySelector("div.logo-home");
-    //   if (logo) {
-    //     const nextSibling = logo.nextElementSibling;
-    //     if (nextSibling) {
-    //       return nextSibling.querySelector(
-    //         "button.bn-button.bn-button__secondary"
-    //       );
-    //     }
-    //   }
-    //   return null;
-    // });
+    // Click loginButton
     const loginButton = await page.waitForSelector(
       "button.bn-button.bn-button__secondary",
       {
         visible: true,
       }
     );
-
     if (!loginButton) {
       console.error("Can't find login button");
       return;
     }
     await loginButton.click();
     console.log("loginButton clicked");
-    await new Promise((r) => setTimeout(r, 1000));
+
+    // Click Google login button
     await page.waitForSelector("#googleLoginBtn", { visible: true });
-    await new Promise((r) => setTimeout(r, 1000));
-    console.log("googleLoginBtn okk");
+    await new Promise((r) => setTimeout(r, 2000));
     await page.click("#googleLoginBtn > button", { force: true });
-    console.log("googleLoginBtn clicked");
+
+    // Get the popup
     const popup = await new Promise((resolve) => page.on("popup", resolve));
 
     // Input gmail

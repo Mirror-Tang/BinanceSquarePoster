@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "dotenv": "^16.4.7",
     "puppeteer": "^24.4.0"
   },
   "type": "commonjs"

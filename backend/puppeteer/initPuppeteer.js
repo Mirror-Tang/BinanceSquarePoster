@@ -1,9 +1,15 @@
 const puppeteer = require("puppeteer");
 
-async function initPuppeteer() {
+async function initPuppeteer(userDataDir) {
+  // Get user data
+  console.log("userDataDir:", userDataDir);
+
+  //Open browser
   const browser = await puppeteer.launch({
     headless: false, // TODO
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    userDataDir,
+    // args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    // ignoreDefaultArgs: ['--disable-extensions'],
   });
   const page = await browser.newPage();
   return { browser, page };

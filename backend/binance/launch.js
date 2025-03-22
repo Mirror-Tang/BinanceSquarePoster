@@ -1,16 +1,17 @@
+require("dotenv").config();
 const login = require("./login");
 const postContent = require("./post");
 
-async function launch(username, password, content) {
+async function launch(userDataDir, username, password, content) {
   const initPuppeteer = require("../puppeteer/initPuppeteer");
-  const { browser, page } = await initPuppeteer();
+  const { browser, page } = await initPuppeteer(userDataDir);
   try {
-    // Login Page
-    await login(browser, page, "a", "b");
+    await login(browser, page, username, password); // Login Page
   } catch (e) {
     console.error("Something wrong on Binance:", e);
   } finally {
-    await browser.close();
+    // TODO
+    // await browser.close();
   }
 }
 
