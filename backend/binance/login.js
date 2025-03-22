@@ -1,8 +1,43 @@
 async function login(browser, page, username, password) {
   try {
     await page.setRequestInterception(false);
-    await page.goto("https://accounts.binance.com/zh-CN/login");
+
+    // Enter square page first
+    await page.goto("https://www.binance.com/square", {
+      waitUntil: "networkidle2",
+    });
+
+    // await page.waitForSelector("div.logo-home", { visible: true });
+    // await new Promise((r) => setTimeout(r, 1000));
+
+    // const loginButton = await page.evaluateHandle(() => {
+    //   const logo = document.querySelector("div.logo-home");
+    //   if (logo) {
+    //     const nextSibling = logo.nextElementSibling;
+    //     if (nextSibling) {
+    //       return nextSibling.querySelector(
+    //         "button.bn-button.bn-button__secondary"
+    //       );
+    //     }
+    //   }
+    //   return null;
+    // });
+    const loginButton = await page.waitForSelector(
+      "button.bn-button.bn-button__secondary",
+      {
+        visible: true,
+      }
+    );
+
+    if (!loginButton) {
+      console.error("Can't find login button");
+      return;
+    }
+    await loginButton.click();
+    console.log("loginButton clicked");
+    await new Promise((r) => setTimeout(r, 1000));
     await page.waitForSelector("#googleLoginBtn", { visible: true });
+    await new Promise((r) => setTimeout(r, 1000));
     console.log("googleLoginBtn okk");
     await page.click("#googleLoginBtn > button", { force: true });
     console.log("googleLoginBtn clicked");
