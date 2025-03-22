@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "puppeteer": "^24.4.0"
+  },
+  "type": "commonjs"
+}
