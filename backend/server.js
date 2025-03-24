@@ -1,0 +1,60 @@
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const path = require("path");
+const initPuppeteer = require("./puppeteer/initPuppeteer");
+const launchBinance = require("./binance/launch");
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.use(cors());
+app.use(express.json());
+
+let browser = null; // headless browser
+let isReady = false; // browser started or not
+let login_started = false;
+
+// Initialize headless browser
+(async () => {
+  try {
+    console.log("Initializing browser in background...");
+    const userDataDir = path.join(__dirname, "puppeteer/puppeteer_user_data");
+    browser = await initPuppeteer(userDataDir);
+    isReady = true;
+    console.log("Browser ready in background");
+  } catch (error) {
+    console.error("Browser initialization failed:", error);
+    process.exit(1);
+  }
+})();
+
+// API check
+app.get("/api/health", (_, res) => {
+  res.json({
+    ready: isReady,
+    message: isReady ? "Browser ready" : "Browser initializing",
+  });
+});
+
+// Login (Binance)
+app.get("/api/login", async (_, res) => {
+  if (!isReady) {
+    return res.status(503).json({ error: "Browser not ready" });
+  }
+  try {
+    if (login_started)
+      return res.status(503).json({ error: "Repeated requests" });
+    login_started = true;
+    qrcode = await launchBinance(browser);
+    if (qrcode !== null) res.json({ qrcodeUrl: qrcode });
+    else res.status(500).json({ error: "Failed to get Binance QR code" });
+  } catch (error) {
+    console.error("Error getting QR code:", error);
+    res.status(500).json({ error: "Failed to get Binance QR code" });
+  }
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhoust:${PORT}`);
+});
