@@ -1,0 +1,32 @@
+// TODO: 解析防御，目前本地版先假定没有傻子自己攻击自己
+async function setAddress(browser, username) {
+  try {
+    const page = await browser.newPage();
+    const url = `https://nitter.net/${encodeURIComponent(username)}`;
+    await page.goto(url, { waitUntil: "networkidle2" });
+    console.log("setAddress");
+    await Promise.all([
+      page.waitForSelector(".profile-card-avatar > img", { visible: true }),
+      page.waitForSelector(".profile-card-fullname", { visible: true }),
+    ]);
+    console.log("Promise.all");
+    await new Promise((r) => setTimeout(r, 777));
+    const [avatar, name] = await page.evaluate(() => {
+      const imgElement = document.querySelector(".profile-card-avatar > img");
+      const nameElement = document.querySelector(".profile-card-fullname");
+      return [
+        imgElement ? imgElement.src : null,
+        nameElement ? nameElement.textContent.trim() : null,
+      ];
+    });
+    if (!avatar || !name) {
+      throw new Error(`无法获取 Twitter 资料（用户 ${username} 可能不存在）`);
+    }
+    return { avatar, name };
+  } catch (error) {
+    console.error("Something wrong when setting twitter address:", error);
+    return null;
+  }
+}
+
+module.exports = setAddress;

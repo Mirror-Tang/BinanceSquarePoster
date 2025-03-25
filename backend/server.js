@@ -4,6 +4,7 @@ const cors = require("cors");
 const path = require("path");
 const initPuppeteer = require("./puppeteer/initPuppeteer");
 const launchBinance = require("./binance/launch");
+const setTwitter = require("./twitter/setAddress");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -35,6 +36,30 @@ app.get("/api/health", (_, res) => {
     ready: isReady,
     message: isReady ? "Browser ready" : "Browser initializing",
   });
+});
+
+// Set twitter address
+app.get("/api/twitter", async (req, res) => {
+  if (!isReady) {
+    return res.status(503).json({ error: "Wait a minute! Browser not ready" });
+  }
+  try {
+    const username = req.query.username.replace(/^@/, ""); // 移除前导 @
+
+    if (!/^[a-zA-Z0-9_]{1,49}$/.test(username)) {
+      return res.status(400).json({
+        error: "Invalid Twitter username",
+      });
+    }
+
+    const { avatar, name } = await setTwitter(browser, username);
+    console.log(avatar, name);
+    if (avatar !== null) res.json({ avatar: avatar, name: name });
+    else res.status(500).json({ error: "Failed to set twitter address" });
+  } catch (error) {
+    console.error("Error setting twitter address:", error);
+    res.status(500).json({ error: "Failed to set twitter address" });
+  }
 });
 
 // Login (Binance)
