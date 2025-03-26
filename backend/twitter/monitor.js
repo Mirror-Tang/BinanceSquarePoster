@@ -36,7 +36,7 @@ class TwitterMonitor {
       } catch (error) {
         console.error("Begin listening error:", error);
       }
-    }, 0.45 * 60 * 1000);
+    }, 5 * 60 * 1000);
   }
 
   async getLatestTweets() {
