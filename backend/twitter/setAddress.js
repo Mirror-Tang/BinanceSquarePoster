@@ -1,7 +1,7 @@
 // TODO: 解析防御，目前本地版先假定没有傻子自己攻击自己
 
 async function setAddress(browser, username) {
-  console.log("setAddress");
+  // console.log("setAddress");
   try {
     const page = await browser.newPage();
     await page.setViewport({ width: 1280, height: 960 });
@@ -27,7 +27,7 @@ async function setAddress(browser, username) {
     if (!avatar || !name) {
       throw new Error(`无法获取 Twitter 资料（用户 ${username} 可能不存在）`);
     }
-    return { avatar, name };
+    return { page, avatar, name };
   } catch (error) {
     console.error("Something wrong when setting twitter address:", error);
     return null;

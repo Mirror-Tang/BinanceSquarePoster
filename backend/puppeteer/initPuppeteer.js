@@ -5,7 +5,7 @@ puppeteer.use(StealthPlugin());
 async function initPuppeteer(userDataDir) {
   // Open browser
   const browser = await puppeteer.launch({
-    headless: true, // TODO
+    headless: false, // TODO
     userDataDir,
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
     ignoreDefaultArgs: ["--disable-extensions"],

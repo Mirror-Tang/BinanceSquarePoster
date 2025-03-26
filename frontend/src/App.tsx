@@ -4,6 +4,7 @@ import "./App.css";
 function App() {
   const [avatar, setAvatar] = useState<string | null>(null);
   const [twitterName, setTwitterName] = useState<string | null>(null);
+  const [settingTwitter, setSettingTwitter] = useState(false);
 
   const [qrcode, setQrcode] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -17,7 +18,7 @@ function App() {
       alert("用户名只包含字母、数字和下划线");
       return;
     }
-
+    setSettingTwitter(true);
     try {
       const response = await fetch(
         `http://localhost:3000/api/twitter?username=${encodeURIComponent(
@@ -32,12 +33,14 @@ function App() {
 
       setAvatar(data.avatar);
       setTwitterName(data.name);
+      setSettingTwitter(false);
     } catch (error) {
       console.error(
         error instanceof Error
           ? error.message
           : "Unknown error in selectTwitter"
       );
+      setSettingTwitter(false);
     }
   };
 
@@ -50,7 +53,6 @@ function App() {
       if (!response.ok)
         throw new Error(data.error || "Failed to fetch QR code");
       setQrcode(data.qrcodeUrl);
-      console.log(data);
     } catch (error) {
       setQrError(
         error instanceof Error
@@ -98,7 +100,9 @@ function App() {
             <span className="text-2xl">{twitterName}</span>
           </div>
         ) : (
-          <div></div>
+          <div>
+            <span>{settingTwitter ? "正在确认推特信息" : ""}</span>
+          </div>
         )}
       </div>
 
@@ -108,10 +112,19 @@ function App() {
             Step 2. 请使用币安 App 或手机相机扫码登录使用
           </p>
         </div>
-        {qrcode ? (
-          <div>
-            <img src={qrcode} alt="Binance login QR code" />
-          </div>
+        {qrcode !== null ? (
+          qrcode === "-1" ? (
+            <div>
+              <span>
+                你之前已经登录过啦~ 要换号的话请删除 puppeteer_user_data
+                目录下所有文件！
+              </span>
+            </div>
+          ) : (
+            <div>
+              <img src={qrcode} alt="Binance login QR code" />
+            </div>
+          )
         ) : isLoading ? (
           <p>正在加载币安登录二维码</p>
         ) : qrError ? (
