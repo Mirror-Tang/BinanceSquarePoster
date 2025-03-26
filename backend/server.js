@@ -74,11 +74,14 @@ app.get("/api/login", async (_, res) => {
     qrcode = await launchBinance(browser);
     if (qrcode !== null) res.json({ qrcodeUrl: qrcode });
     else res.status(500).json({ error: "Failed to get Binance QR code" });
+    // TODO: 改用 Websocket 实时推送最新进展到前端
   } catch (error) {
     console.error("Error getting QR code:", error);
     res.status(500).json({ error: "Failed to get Binance QR code" });
   }
 });
+
+// TODO: 手动开启和关闭推流 API
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhoust:${PORT}`);
